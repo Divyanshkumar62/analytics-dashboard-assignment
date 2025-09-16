@@ -37,7 +37,7 @@ const SummaryCard: React.FC<SummaryCardProps> = ({ kpi }) => {
   const trendBgColor = kpi.trend > 0 ? 'bg-green-50' : kpi.trend < 0 ? 'bg-red-50' : 'bg-gray-50';
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-shadow duration-200">
+    <div className="w-[159px] h-[98px] bg-white rounded-[6.8px] shadow-[0px 4px 13.3px 0px rgba(0,0,0,0.031)] hover:shadow-[0px 6px 16px 0px rgba(0,0,0,0.06)] transition-shadow duration-200 opacity-100">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-sm font-medium text-gray-600">{kpi.title}</h3>
         <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${trendBgColor} ${getTrendColor(kpi.trend)}`}>

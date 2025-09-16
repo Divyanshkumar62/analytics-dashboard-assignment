@@ -1,119 +1,135 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { LayoutDashboard, BarChart3, FileText, Settings } from 'lucide-react';
+import React, { useState } from 'react';
+import {
+  BarChart3,
+  Gift,
+  MessageSquare,
+  PieChart,
+  TrendingUp,
+  Users,
+  CheckCircle,
+  Bookmark,
+  Calendar,
+  User
+} from 'lucide-react';
 
-interface NavItem {
-  icon: React.ComponentType<any>;
-  label: string;
-  active?: boolean;
+interface NavIconButtonProps {
+  Icon: React.ComponentType<any>;
+  title: string;
+  isActive: boolean;
+  onClick: () => void;
 }
 
-const navItems: NavItem[] = [
-  { icon: LayoutDashboard, label: 'Dashboard', active: true },
-  { icon: BarChart3, label: 'Analytics' },
-  { icon: FileText, label: 'Reports' },
-  { icon: Settings, label: 'Settings' },
-];
+const NavIconButton: React.FC<NavIconButtonProps> = ({
+  Icon,
+  title,
+  isActive,
+  onClick
+}) => (
+  <button
+    onClick={onClick}
+    className={`w-full flex items-center justify-center p-3 rounded-lg transition-all duration-200 group ${
+      isActive ? 'bg-white/30 hover:bg-white/40' : 'bg-transparent hover:bg-orange-600/20'
+    }`}
+    title={title}
+    aria-label={title}
+  >
+    <Icon size={24} className="flex-shrink-0 text-white" />
+  </button>
+);
 
-interface SidebarProps {
-  isCollapsed: boolean;
-  toggleSidebar: () => void;
-}
+interface SidebarProps {}
 
-const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, toggleSidebar }) => {
-  const sidebarVariants = {
-    expanded: { width: 256 },
-    collapsed: { width: 64 },
-  };
+const Sidebar: React.FC<SidebarProps> = () => {
+  const [activeItem, setActiveItem] = useState<string>('dashboard');
 
-  const itemVariants = {
-    expanded: { opacity: 1, x: 0 },
-    collapsed: { opacity: 0, x: -20 },
+  const handleItemClick = (itemId: string) => {
+    setActiveItem(itemId);
   };
 
   return (
-    <motion.div
-      initial="expanded"
-      animate={isCollapsed ? 'collapsed' : 'expanded'}
-      variants={sidebarVariants}
-      transition={{ duration: 0.3, ease: 'easeInOut' }}
-      className="fixed left-0 top-0 h-screen bg-gray-900 text-white z-40 flex flex-col border-r border-gray-700"
+    <div
+      className="fixed left-[-4px] top-[-10px] w-[60px] h-[849px] bg-[#FF5900] text-white flex flex-col"
     >
-      {/* Sidebar Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-700">
-        <motion.h1
-          initial={{ opacity: 1, x: 0 }}
-          animate={isCollapsed ? { opacity: 0, x: -10 } : { opacity: 1, x: 0 }}
-          className="text-xl font-bold"
-        >
-          Logo
-        </motion.h1>
-        <button
-          onClick={toggleSidebar}
-          className="p-1 rounded hover:bg-gray-800 transition-colors"
-          title={isCollapsed ? 'Expand' : 'Collapse'}
-        >
-          {/* Simple hamburger icon */}
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
-        </button>
+      {/* Logo */}
+      <div className="flex items-center justify-center p-4">
+        <span className="text-xl font-bold text-white">LG</span>
       </div>
 
-      {/* Navigation Items */}
-      <nav className="flex-1 p-4">
-        <ul className="space-y-2">
-          {navItems.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <li key={index}>
-                <button
-                  className={`w-full flex items-center p-3 rounded-lg hover:bg-gray-800 transition-colors group ${
-                    item.active ? 'bg-blue-600' : ''
-                  }`}
-                  title={isCollapsed ? item.label : ''}
-                >
-                  <Icon size={24} className="flex-shrink-0" />
-                  <motion.span
-                    initial="expanded"
-                    animate={isCollapsed ? 'collapsed' : 'expanded'}
-                    variants={itemVariants}
-                    transition={{ duration: 0.2 }}
-                    className="ml-3 whitespace-nowrap"
-                  >
-                    {item.label}
-                  </motion.span>
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+      {/* Navigation Items - First 7 */}
+      <nav className="flex-1 p-2 space-y-1">
+        <NavIconButton
+          Icon={BarChart3}
+          title="Dashboard"
+          isActive={activeItem === 'dashboard'}
+          onClick={() => handleItemClick('dashboard')}
+        />
+        <NavIconButton
+          Icon={Gift}
+          title="Gift"
+          isActive={activeItem === 'gift'}
+          onClick={() => handleItemClick('gift')}
+        />
+        <NavIconButton
+          Icon={MessageSquare}
+          title="Messages"
+          isActive={activeItem === 'messages'}
+          onClick={() => handleItemClick('messages')}
+        />
+        <NavIconButton
+          Icon={PieChart}
+          title="Charts"
+          isActive={activeItem === 'charts'}
+          onClick={() => handleItemClick('charts')}
+        />
+        <NavIconButton
+          Icon={TrendingUp}
+          title="Trends"
+          isActive={activeItem === 'trends'}
+          onClick={() => handleItemClick('trends')}
+        />
+        <NavIconButton
+          Icon={Users}
+          title="Users"
+          isActive={activeItem === 'users'}
+          onClick={() => handleItemClick('users')}
+        />
+        <NavIconButton
+          Icon={CheckCircle}
+          title="Tasks"
+          isActive={activeItem === 'tasks'}
+          onClick={() => handleItemClick('tasks')}
+        />
       </nav>
 
-      {/* Bottom Section - can add user profile, etc. */}
-      <div className="p-4 border-t border-gray-700">
-        <button className="w-full flex items-center p-2 hover:bg-gray-800 rounded">
-          <div className="w-8 h-8 bg-gray-600 rounded-full flex-shrink-0"></div>
-          <motion.span
-            initial="expanded"
-            animate={isCollapsed ? 'collapsed' : 'expanded'}
-            variants={itemVariants}
-            className="ml-3 whitespace-nowrap"
-          >
-            Profile
-          </motion.span>
-        </button>
+      {/* Spacer */}
+      <div className="flex-1"></div>
+
+      {/* Navigation Items - Last 2 */}
+      <nav className="p-2 space-y-1">
+        <NavIconButton
+          Icon={Bookmark}
+          title="Bookmarks"
+          isActive={activeItem === 'bookmarks'}
+          onClick={() => handleItemClick('bookmarks')}
+        />
+        <NavIconButton
+          Icon={Calendar}
+          title="Calendar"
+          isActive={activeItem === 'calendar'}
+          onClick={() => handleItemClick('calendar')}
+        />
+      </nav>
+
+      {/* Profile */}
+      <div className="p-4">
+        <NavIconButton
+          Icon={User}
+          title="Profile"
+          isActive={activeItem === 'profile'}
+          onClick={() => handleItemClick('profile')}
+        />
       </div>
-    </motion.div>
+    </div>
   );
 };
 

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Sidebar from './Sidebar';
-import Navbar from './Navbar';
+import TopBar from './TopBar';
 import ContentArea from './ContentArea';
 
 interface DashboardLayoutProps {
@@ -8,17 +8,13 @@ interface DashboardLayoutProps {
 }
 
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-
-  const toggleSidebar = () => {
-    setIsCollapsed(!isCollapsed);
-  };
-
   return (
-    <div className="relative h-screen bg-gray-50">
-      <Sidebar isCollapsed={isCollapsed} toggleSidebar={toggleSidebar} />
-      <Navbar />
-      <ContentArea isCollapsed={isCollapsed}>
+    <div className="relative h-screen bg-white">
+      <Sidebar />
+      <div className="absolute top-[0px] left-[56px] w-[1314px] h-16 z-20">
+        <TopBar />
+      </div>
+      <ContentArea>
         {children}
       </ContentArea>
     </div>
