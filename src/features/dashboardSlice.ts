@@ -9,6 +9,16 @@ export interface KPI {
   format: 'currency' | 'number' | 'percentage' | 'ratio';
 }
 
+export interface TopListItem {
+  name: string;
+  value: number;
+}
+
+export interface BiggestChangeItem {
+  name: string;
+  change: number;
+}
+
 const initialState = {
   kpis: [
     {
@@ -68,6 +78,16 @@ const initialState = {
       format: 'currency' as const,
     },
   ] as KPI[],
+  topList: [
+    { name: 'Campaign A', value: 500 },
+    { name: 'Campaign B', value: 450 },
+    { name: 'Campaign C', value: 300 },
+  ] as TopListItem[],
+  biggestChanges: [
+    { name: 'Campaign X', change: 120 },
+    { name: 'Campaign Y', change: -85 },
+    { name: 'Campaign Z', change: 40 },
+  ] as BiggestChangeItem[],
 };
 
 const dashboardSlice = createSlice({
@@ -79,5 +99,7 @@ const dashboardSlice = createSlice({
 });
 
 export const selectKPIs = (state: RootState) => state.dashboard.kpis;
+export const selectTopList = (state: RootState) => state.dashboard.topList;
+export const selectBiggestChanges = (state: RootState) => state.dashboard.biggestChanges;
 
 export default dashboardSlice.reducer;

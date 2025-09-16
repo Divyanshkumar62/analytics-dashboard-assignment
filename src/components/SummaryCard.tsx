@@ -34,21 +34,21 @@ const SummaryCard: React.FC<SummaryCardProps> = ({ kpi }) => {
     return <Minus className="w-4 h-4" />;
   };
 
-  const trendBgColor = kpi.trend > 0 ? 'bg-green-50' : kpi.trend < 0 ? 'bg-red-50' : 'bg-gray-50';
+  const trendBgColor = 'bg-white';
 
   return (
-    <div className="w-[159px] h-[98px] bg-white rounded-[6.8px] shadow-[0px 4px 13.3px 0px rgba(0,0,0,0.031)] hover:shadow-[0px 6px 16px 0px rgba(0,0,0,0.06)] transition-shadow duration-200 opacity-100">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-medium text-gray-600">{kpi.title}</h3>
+    <div className="w-full bg-red rounded-[6.8px] border border-gray-200 shadow-[0px 4px 13.3px 0px rgba(0,0,0,0.031)] hover:shadow-[0px 6px 16px 0px rgba(0,0,0,0.06)] transition-shadow duration-200 opacity-100 p-4">
+      <div className="flex items-center justify-between mb-3">
+        <h3 className="text-xs sm:text-sm font-medium text-gray-600 truncate">{kpi.title}</h3>
         <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${trendBgColor} ${getTrendColor(kpi.trend)}`}>
           {getTrendIcon(kpi.trend)}
           <span className="ml-1">{kpi.trend.toFixed(1)}%</span>
         </div>
       </div>
-      <div className="text-2xl font-bold text-gray-900">
+      <div className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">
         {formatValue(kpi.value, kpi.format)}
       </div>
-      <p className="text-xs text-gray-500 mt-1">
+      <p className="text-xs text-gray-500">
         {kpi.trend > 0 ? 'increased' : kpi.trend < 0 ? 'decreased' : 'no change'} from last period
       </p>
     </div>
